@@ -1,19 +1,22 @@
 import React from "react";
 import Card from "./Card";
 import Filter from "./Filter";
-import { navFilter, fourFilter } from "../atoms/filterAtom";
+import { fourFilter } from "../atoms/filterAtom";
 import { useRecoilValue } from "recoil";
 import customData from "../data/MOCK_DATA.json";
+import { navTilte } from "../atoms/navAtom";
 function Main() {
   //console.log(customData);
-  const filter = useRecoilValue(navFilter);
+  const navTilteValue = useRecoilValue(navTilte) || "rent";
+  //const filter = useRecoilValue(navFilter);
+
   const fourFilterValue = useRecoilValue(fourFilter);
   return (
     <div className=" px-[8vw] ">
       <div className="flex py-10">
         <div className="flex flex-col items-center w-full space-y-5 md:space-y-0 md:justify-between md:flex-row md:flex">
           <h1 className="text-2xl font-bold md:text-4xl">
-            Search properties to rent
+            Search properties to {navTilteValue}
           </h1>
           <label className="block md:w-fit">
             <input

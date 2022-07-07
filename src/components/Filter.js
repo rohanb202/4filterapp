@@ -1,11 +1,11 @@
 import React from "react";
-import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Popover from "@mui/material/Popover";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { navFilter, fourFilter } from "../atoms/filterAtom";
 import { useRecoilState } from "recoil";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon, FilterIcon } from "@heroicons/react/solid";
+import { FilterIcon as FilterIcon2 } from "@heroicons/react/outline";
 import { useForm } from "react-hook-form";
 import customData from "../data/MOCK_DATA.json";
 
@@ -15,13 +15,14 @@ function valuetext(value) {
 
 function Filter() {
   const [priceValue, setPriceValue] = useState([0, 5000]);
-  const [filteredValue, setFilter] = useRecoilState(navFilter);
-  const [fourFilteredValue, setFourFilter] = useRecoilState(fourFilter);
+  const [openFilter, setOpenFilter] = useState(false);
+  const [filteredValue] = useRecoilState(navFilter);
+  const [, setFourFilter] = useRecoilState(fourFilter);
 
   const {
     register,
     handleSubmit,
-    watch,
+
     formState: { errors },
   } = useForm();
 
@@ -89,10 +90,27 @@ function Filter() {
   };
 
   return (
-    <div>
+    <div
+      className={`
+      } flex flex-col items-center space-y-5  justify-center`}
+    >
+      <button
+        className="flex items-center space-x-2 xl:hidden"
+        onClick={() => setOpenFilter(!openFilter)}
+      >
+        {openFilter ? (
+          <FilterIcon className="w-5 h-5 text-violet-500" />
+        ) : (
+          <FilterIcon2 className="w-5 h-5 text-violet-500" />
+        )}
+
+        <span className="font-semibold ">Filter</span>
+      </button>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-around p-2 space-y-2 bg-white rounded-lg shadow-md xl:space-x-10 xl:justify-around xl:items-center xl:divide-x xl:flex-row xl:flex"
+        className={` ${
+          !openFilter && "hidden "
+        }   max-w-[25rem] xl:max-w-none  flex flex-col justify-around p-2 space-y-2 bg-white rounded-lg shadow-md xl:space-x-10 xl:justify-around xl:items-center xl:divide-x xl:flex-row xl:flex`}
       >
         <div className="flex flex-col items-start justify-center px-5 py-2 space-y-2 ">
           <h1 className="font-light">Location</h1>
